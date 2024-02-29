@@ -16,11 +16,9 @@ AGachaMachine::AGachaMachine()
 void AGachaMachine::BeginPlay()
 {
 	Super::BeginPlay();
-	FivestarR = 0.01f;
-	FourstarR = 0.1f;
-	ThreestarR = 0.79f;
-
-	FeaturedR = 0.50f;
+	FivestarR = 0.05f;
+	FourstarR = 0.15f;
+	ThreestarR = 0.80f;
 	
 }
 
@@ -32,15 +30,7 @@ TArray<int> AGachaMachine::Roll(int nRolls)
 		float Rolls = UKismetMathLibrary::RandomFloat();
 		if (Rolls < FivestarR)
 		{
-			float FR = UKismetMathLibrary::RandomFloat();
-			if (FR < FeaturedR)
-			{
-				GachaRoll.Add(6); //just a placeholder for now
-			}
-			else
-			{
-				GachaRoll.Add(5);
-			}
+			GachaRoll.Add(5);
 		}
 		else if (Rolls < FourstarR)
 		{

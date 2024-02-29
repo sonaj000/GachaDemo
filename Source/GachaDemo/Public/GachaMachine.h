@@ -37,9 +37,6 @@ protected:
 	UPROPERTY(EditAnywhere)
 	float ThreestarR;
 
-	UPROPERTY(EditAnywhere)
-	float FeaturedR;
-
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
