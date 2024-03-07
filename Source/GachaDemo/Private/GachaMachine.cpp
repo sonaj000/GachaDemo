@@ -36,7 +36,7 @@ TArray<int> AGachaMachine::Roll(int nRolls)
 		{
 			GachaRoll.Add(4);
 		}
-		else if (Rolls < ThreestarR)
+		else
 		{
 			GachaRoll.Add(3);
 		}
@@ -49,5 +49,17 @@ void AGachaMachine::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+FString AGachaMachine::convertRolls()
+{
+	FString A = "";
+	for (int i : GachaRoll)
+	{
+		A.AppendInt(i);
+		A.AppendChar(',');
+	}
+		
+	return A;
 }
 
