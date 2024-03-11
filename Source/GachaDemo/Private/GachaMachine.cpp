@@ -16,9 +16,16 @@ AGachaMachine::AGachaMachine()
 void AGachaMachine::BeginPlay()
 {
 	Super::BeginPlay();
-	FivestarR = 0.05f;
+	FivestarR = 0.005f;
 	FourstarR = 0.15f;
 	ThreestarR = 0.80f;
+
+	FivestarNP = 0.02;
+	FourstarNP = 0.145;
+	ThreestarNP = 0.835;
+	
+	PityNumber = 50;
+	pitycounter = 0;
 	
 }
 
@@ -28,17 +35,48 @@ TArray<int> AGachaMachine::Roll(int nRolls)
 	for (int i{ 0 }; i < nRolls; i++)
 	{
 		float Rolls = UKismetMathLibrary::RandomFloat();
-		if (Rolls < FivestarR)
+		if (Rolls < FivestarNP)
 		{
 			GachaRoll.Add(5);
 		}
-		else if (Rolls < FourstarR)
+		else if (Rolls < FourstarNP)
 		{
 			GachaRoll.Add(4);
 		}
 		else
 		{
 			GachaRoll.Add(3);
+		}
+	}
+	return GachaRoll;
+}
+
+TArray<int> AGachaMachine::RollPity(int nRolls)
+{
+	GachaRoll.Empty();
+	pitycounter += nRolls;
+	for (int i{ 0 }; i < nRolls; i++)
+	{
+		if (pitycounter >= PityNumber)
+		{
+			GachaRoll.Add(5);
+			pitycounter = 0;
+		}
+		else
+		{
+			float Rolls = UKismetMathLibrary::RandomFloat();
+			if (Rolls < FivestarR)
+			{
+				GachaRoll.Add(5);
+			}
+			else if (Rolls < FourstarR)
+			{
+				GachaRoll.Add(4);
+			}
+			else
+			{
+				GachaRoll.Add(3);
+			}
 		}
 	}
 	return GachaRoll;

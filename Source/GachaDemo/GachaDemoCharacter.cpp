@@ -10,6 +10,7 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
+#include "HealthComponent.h"
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
@@ -52,6 +53,15 @@ AGachaDemoCharacter::AGachaDemoCharacter()
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
+
+	HealthBar = CreateDefaultSubobject<UHealthComponent>(TEXT("Health Bar"));
+	HealthBar->OnHealthChanged.AddDynamic(this, &AGachaDemoCharacter::OnHealthChanged);
+
+}
+
+void AGachaDemoCharacter::Attack()
+{
+
 }
 
 void AGachaDemoCharacter::BeginPlay()
@@ -67,6 +77,8 @@ void AGachaDemoCharacter::BeginPlay()
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
 	}
+
+	numPulls = 60;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -86,11 +98,25 @@ void AGachaDemoCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
 
 		// Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AGachaDemoCharacter::Look);
+
+		EnhancedInputComponent->BindAction(AttackAction, ETriggerEvent::Triggered, this, &AGachaDemoCharacter::Attack);
 	}
 	else
 	{
 		UE_LOG(LogTemplateCharacter, Error, TEXT("'%s' Failed to find an Enhanced Input component! This template is built to use the Enhanced Input system. If you intend to use the legacy system, then you will need to update this C++ file."), *GetNameSafe(this));
 	}
+}
+
+void AGachaDemoCharacter::OnHealthChanged(UHealthComponent* OwningHealthComp, float Health, float HealthDelta, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
+{
+	if (Health <= 0.0f)
+	{
+		GetMovementComponent()->StopMovementImmediately();
+		//GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision)
+		//reset level for now
+
+	}
+	//play the montage for being hit
 }
 
 void AGachaDemoCharacter::Move(const FInputActionValue& Value)

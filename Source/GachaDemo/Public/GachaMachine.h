@@ -23,13 +23,14 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	FString convertRolls();
+	
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 	UFUNCTION(BlueprintCallable)
-	virtual TArray<int> Roll(int nRolls);
+	TArray<int> Roll(int nRolls);
 
 	UPROPERTY(EditAnywhere)
 	float FivestarR;
@@ -39,6 +40,24 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	float ThreestarR;
+
+	UPROPERTY(EditAnywhere)
+	float FivestarNP;
+
+	UPROPERTY(EditAnywhere)
+	float FourstarNP;
+
+	UPROPERTY(EditAnywhere)
+	float ThreestarNP;
+
+	UPROPERTY(EditAnywhere)
+	int PityNumber;
+
+	UPROPERTY(VisibleAnywhere)
+	int pitycounter;
+
+	UFUNCTION(BlueprintCallable)
+	TArray<int> RollPity(int nRolls);
 
 public:
 	// Called every frame
