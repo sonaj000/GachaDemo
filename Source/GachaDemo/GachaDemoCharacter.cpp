@@ -11,6 +11,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
 #include "HealthComponent.h"
+#include "Weapon.h"
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
@@ -57,6 +58,10 @@ AGachaDemoCharacter::AGachaDemoCharacter()
 	HealthBar = CreateDefaultSubobject<UHealthComponent>(TEXT("Health Bar"));
 	HealthBar->OnHealthChanged.AddDynamic(this, &AGachaDemoCharacter::OnHealthChanged);
 
+	WeaponComp = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Weapon"));
+	WeaponComp->SetupAttachment(RootComponent);
+
+	WeaponAttachSocketName = "Test";
 }
 
 void AGachaDemoCharacter::Attack()
@@ -76,6 +81,17 @@ void AGachaDemoCharacter::BeginPlay()
 		{
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
+	}
+
+	FActorSpawnParameters SpawnParams;
+	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	CurrentWeapon = GetWorld()->SpawnActor<AWeapon>(SpawnWeapon, FVector::ZeroVector, FRotator::ZeroRotator, SpawnParams);
+	UE_LOG(LogTemp, Warning, TEXT("weapon spawned"));
+	if (CurrentWeapon)
+	{
+		CurrentWeapon->SetOwner(this);
+		CurrentWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, WeaponAttachSocketName);
+		UE_LOG(LogTemp, Warning, TEXT("weapon attached")); //has been successfully done
 	}
 
 	numPulls = 60;
