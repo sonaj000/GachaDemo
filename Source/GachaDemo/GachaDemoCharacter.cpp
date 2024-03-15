@@ -85,7 +85,7 @@ void AGachaDemoCharacter::BeginPlay()
 
 	FActorSpawnParameters SpawnParams;
 	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-	CurrentWeapon = GetWorld()->SpawnActor<AWeapon>(SpawnWeapon, FVector::ZeroVector, FRotator::ZeroRotator, SpawnParams);
+	CurrentWeapon = GetWorld()->SpawnActor<AWeapon>(SpawnWeapon, FVector::ZeroVector, FRotator(90,90,90), SpawnParams);
 	UE_LOG(LogTemp, Warning, TEXT("weapon spawned"));
 	if (CurrentWeapon)
 	{

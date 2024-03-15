@@ -17,6 +17,8 @@ class AWeapon;
 
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
 
+
+
 UCLASS(config=Game)
 class AGachaDemoCharacter : public ACharacter
 {
@@ -62,6 +64,7 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Weapon, meta = (AllowPrivateAccess = "true"))
 	USkeletalMeshComponent* WeaponComp;
+
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")

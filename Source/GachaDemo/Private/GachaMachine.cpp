@@ -3,6 +3,8 @@
 
 #include "GachaMachine.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Misc/DateTime.h"
+
 
 // Sets default values
 AGachaMachine::AGachaMachine()
@@ -54,12 +56,20 @@ TArray<int> AGachaMachine::Roll(int nRolls)
 TArray<int> AGachaMachine::RollPity(int nRolls)
 {
 	GachaRoll.Empty();
-	pitycounter += nRolls;
+	FRollTable RollResults;
+
 	for (int i{ 0 }; i < nRolls; i++)
 	{
+		pitycounter++;
+		FString NewNumber = FString::FromInt(pitycounter);
+
 		if (pitycounter >= PityNumber)
 		{
 			GachaRoll.Add(5);
+			RollResults.RollNumber = 5;
+			RollResults.BannerNumber = 1;
+			RollResults.Time = FDateTime::FDateTime().GetSecond();
+			TableRolls->AddRow(FName(*NewNumber), RollResults);
 			pitycounter = 0;
 		}
 		else
@@ -68,18 +78,36 @@ TArray<int> AGachaMachine::RollPity(int nRolls)
 			if (Rolls < FivestarR)
 			{
 				GachaRoll.Add(5);
+				RollResults.RollNumber = 5;
+				RollResults.BannerNumber = 1;
+				RollResults.Time = FDateTime::FDateTime().GetSecond();
+				TableRolls->AddRow(FName(*NewNumber), RollResults);
 			}
 			else if (Rolls < FourstarR)
 			{
 				GachaRoll.Add(4);
+				RollResults.RollNumber = 4;
+				RollResults.BannerNumber = 1;
+				RollResults.Time = FDateTime::FDateTime().GetSecond();
+				TableRolls->AddRow(FName(*NewNumber), RollResults);
 			}
 			else
 			{
 				GachaRoll.Add(3);
+				RollResults.RollNumber = 3;
+				RollResults.BannerNumber = 1;
+				RollResults.Time = FDateTime::FDateTime().GetSecond();
+				TableRolls->AddRow(FName(*NewNumber), RollResults);
 			}
 		}
 	}
+	//add gacharoll to the table
+	//for i in gacharoll, add new row in table so. 
+	//CurrentGameMode->PlayerTable->AddRow(FName(*NewNumber), PlayerStats);//add row to the datatable
+	//UE_LOG(LogTemp, Warning, TEXT("///data is logged, %d"), key[0]);
 	return GachaRoll;
+
+	
 }
 
 // Called every frame

@@ -4,7 +4,26 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Engine/DataTable.h"
 #include "GachaMachine.generated.h"
+
+class UDataTable;
+
+USTRUCT(BlueprintType)
+struct FRollTable : public FTableRowBase
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int RollNumber;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int BannerNumber;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int32 Time;
+
+};
 
 UCLASS()
 class GACHADEMO_API AGachaMachine : public AActor
@@ -24,6 +43,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	FString convertRolls();
 	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Data Analysis")
+	UDataTable*	TableRolls;
 
 protected:
 	// Called when the game starts or when spawned
