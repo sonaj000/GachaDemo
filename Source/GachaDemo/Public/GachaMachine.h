@@ -21,7 +21,7 @@ struct FRollTable : public FTableRowBase
 	int BannerNumber;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int32 Time;
+	FString Time;
 
 };
 

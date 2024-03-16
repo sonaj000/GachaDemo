@@ -68,7 +68,7 @@ TArray<int> AGachaMachine::RollPity(int nRolls)
 			GachaRoll.Add(5);
 			RollResults.RollNumber = 5;
 			RollResults.BannerNumber = 1;
-			RollResults.Time = FDateTime::FDateTime().GetSecond();
+			RollResults.Time = FDateTime::Now().ToString();
 			TableRolls->AddRow(FName(*NewNumber), RollResults);
 			pitycounter = 0;
 		}
@@ -80,7 +80,7 @@ TArray<int> AGachaMachine::RollPity(int nRolls)
 				GachaRoll.Add(5);
 				RollResults.RollNumber = 5;
 				RollResults.BannerNumber = 1;
-				RollResults.Time = FDateTime::FDateTime().GetSecond();
+				RollResults.Time = FDateTime::Now().ToString();
 				TableRolls->AddRow(FName(*NewNumber), RollResults);
 			}
 			else if (Rolls < FourstarR)
@@ -88,7 +88,7 @@ TArray<int> AGachaMachine::RollPity(int nRolls)
 				GachaRoll.Add(4);
 				RollResults.RollNumber = 4;
 				RollResults.BannerNumber = 1;
-				RollResults.Time = FDateTime::FDateTime().GetSecond();
+				RollResults.Time = FDateTime::Now().ToString();
 				TableRolls->AddRow(FName(*NewNumber), RollResults);
 			}
 			else
@@ -96,8 +96,9 @@ TArray<int> AGachaMachine::RollPity(int nRolls)
 				GachaRoll.Add(3);
 				RollResults.RollNumber = 3;
 				RollResults.BannerNumber = 1;
-				RollResults.Time = FDateTime::FDateTime().GetSecond();
+				RollResults.Time = FDateTime::Now().ToString();
 				TableRolls->AddRow(FName(*NewNumber), RollResults);
+				UE_LOG(LogTemp, Warning, TEXT("added")); 
 			}
 		}
 	}
